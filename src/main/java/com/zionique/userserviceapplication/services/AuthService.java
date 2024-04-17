@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.MultiValueMapAdapter;
@@ -31,12 +32,12 @@ public class AuthService {
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
     private RoleService roleService;
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, SessionRepository sessionRepository){
+    public AuthService(UserRepository userRepository, SessionRepository sessionRepository, PasswordEncoder passwordEncoder){
         this.sessionRepository = sessionRepository;
         this.userRepository = userRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDto signup(SignupRequestDto requestDto) throws UserExistsException {
